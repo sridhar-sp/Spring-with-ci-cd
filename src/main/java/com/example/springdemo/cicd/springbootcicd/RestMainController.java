@@ -8,6 +8,6 @@ public class RestMainController {
 
     @RequestMapping("/")
     public String index(){
-        return "You are in homepage";
+        return "You are i";
     }
 }
