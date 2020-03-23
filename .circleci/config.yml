@@ -42,7 +42,7 @@ jobs:
       - run: gradle test
 
       - store_test_results :
-          path: ~/repo/build/reports/tests/test
+          path: ~/repo/build/test-results
 
       - run : gradle build
 
