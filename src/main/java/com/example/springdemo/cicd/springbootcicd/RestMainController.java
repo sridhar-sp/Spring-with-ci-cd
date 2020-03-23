@@ -8,6 +8,6 @@ public class RestMainController {
 
     @RequestMapping("/")
     public String index(){
-        return "Welcome to Spring Boot CI-CD ";
+        return "Welcome to Spring Boot CI-CD Excercise";
     }
 }
