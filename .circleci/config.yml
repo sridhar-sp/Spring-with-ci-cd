@@ -4,14 +4,11 @@
 #
 version: 2.1
 
-orbs:
-  heroku: circleci/heroku@1.0.1 # Invoke the Heroku orb
-
 workflows:
   heroku_deploy:
     jobs:
       - build
-      - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
+      - deploy:
           requires:
             - build
 
@@ -53,10 +50,28 @@ jobs:
       # run tests!
       - run: gradle test
 
-      - store_test_results :
+      - store_test_results:
           path: ~/repo/build/test-results
 
-      - run : gradle bootJar
+      - run: gradle bootJar
 
       - store_artifacts:
           path: ~/repo/build/libs
+
+  deploy:
+    machine:
+      enabled: true
+    working_directory: ~/repo
+    environment:
+      HEROKU_APP: "spring-boot-ci-cd" # define env var $HEROKU_APP
+    steps:
+      - checkout
+      - run:
+          name: Setup Heroku
+          command: bash .circleci/setup-heroku.sh # run a script to set up Heroku
+
+      - run:
+          command: |
+            git push heroku master:master
+            sleep 5 # sleep for 5 seconds to wait for dynos
+            heroku restart

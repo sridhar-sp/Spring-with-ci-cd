@@ -9,6 +9,6 @@ public class RestMainController {
 
     @GetMapping("/")
     public String index(){
-        return "Welcome to Spring Boot CI-CD Excercise";
+        return "Welcome to Project";
     }
 }
