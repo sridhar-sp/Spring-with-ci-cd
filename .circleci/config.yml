@@ -8,12 +8,10 @@ orbs:
   heroku: circleci/heroku@1.0.1 # Invoke the Heroku orb
 
 workflows:
-  heroku_deploy:
+  build_deploy:
     jobs:
       - build
-      - production_deploy:
-          requires:
-            - build
+
 
 
 jobs:
