@@ -11,7 +11,7 @@ workflows:
   heroku_deploy:
     jobs:
       - build
-      - production_deploy
+      - production_deploy:
           requires:
             - build
 
