@@ -61,9 +61,6 @@ jobs:
 
       - store_artifacts:
           path: ~/repo/build/libs
-      -run :
-        name : Copy Jar to the temp workspace
-        command : cp ~/repo/build/libs/spring-boot-ci-cd-0.0.1-SNAPSHOT.jar /tmp/standalone-app.jar
 
   production_deploy:
     docker:
@@ -72,8 +69,6 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      - attach_workspace:
-          at: /tmp
       - checkout
       - run:
           name: Run setup script
@@ -81,7 +76,7 @@ jobs:
       - run:
           name: Heroku Deploy
           command: |
-              cp /tmp/ .
+              cp ~/repo/build/libs .
               ls -la
               heroku plugins:install heroku-cli-deploy
               heroku plugins:install heroku-cli-deploy  # when debugging on circle image, first run succeeded, but did not make plugin available
