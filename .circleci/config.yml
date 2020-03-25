@@ -71,7 +71,7 @@ jobs:
     steps:
       - run:
           name: Run setup script
-          command: bash .circleci/setup-heroku.sh
+          command: bash test.sh
       - run:
           name: Heroku Deploy
           command: |
