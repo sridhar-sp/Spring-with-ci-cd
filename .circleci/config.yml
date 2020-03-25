@@ -8,10 +8,12 @@ orbs:
   heroku: circleci/heroku@1.0.1 # Invoke the Heroku orb
 
 workflows:
-  build_deploy:
+  heroku_deploy:
     jobs:
       - build
-
+      - production_deploy:
+          requires:
+            - build
 
 
 jobs:
@@ -68,15 +70,15 @@ jobs:
 
     steps:
       - run:
-        name: Run setup script
-        command: bash /tmp/setup-heroku.sh
+          name: Run setup script
+          command: bash /tmp/setup-heroku.sh
       - run:
           name: Heroku Deploy
           command: |
-            cp ~/repo/build/libs .
-            ls -la
-            heroku plugins:install heroku-cli-deploy
-            heroku plugins:install heroku-cli-deploy  # when debugging on circle image, first run succeeded, but did not make plugin available
-            heroku deploy:jar spring-boot-ci-cd-0.0.1-SNAPSHOT.jar --app $HEROKU_APP_NAME
+              cp ~/repo/build/libs .
+              ls -la
+              heroku plugins:install heroku-cli-deploy
+              heroku plugins:install heroku-cli-deploy  # when debugging on circle image, first run succeeded, but did not make plugin available
+              heroku deploy:jar spring-boot-ci-cd-0.0.1-SNAPSHOT.jar --app $HEROKU_APP_NAME
 
 
